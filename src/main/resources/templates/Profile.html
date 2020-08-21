@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.tymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>To-Do List-Profile</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/fonts/material-icon/css/material-design-iconic-font.min.css}">
+    <link rel="stylesheet" th:href="@{/fonts/poppins/}">
+    <!--SweatAlert-->
+    
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/styleHomepage.css}">
+        <!--Icon-->
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/img/TodoIcon.png}">
+   
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar Holder -->
+        <nav id="sidebar">
+            <div class="sidebar-header">                                                                        
+                <h3>To-Do App</h3>
+                <strong ><i style="width: max-content;"><img src="img/TodoLogo.ico" style=" background-color: white; height: 72px;
+                margin-top: auto;
+                    width: 131px;
+                     margin-left: -39px;
+                    background-color: white;
+                    border-radius: 25px;"></i></strong> 
+                <hr style="background-color:white; height: 2px;">
+            </div>
+
+            <ul class="list-unstyled components" style="margin-top: -47px; margin-left: 10px;">
+                <li>
+                    <a th:href="@{HomePage}" href="HomePage.html">
+                        <i class="glyphicon glyphicon-home"></i>
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{ToDoList}" href="ToDoList.html">
+                        <i class="glyphicon glyphicon-list-alt"></i>
+                        My To-Do List
+                    </a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="glyphicon glyphicon-wrench"></i>
+                        Settings
+                    </a>
+                    <ul class="collapse list-unstyled " id="pageSubmenu">
+                        <li>
+                            <a th:href="@{Profile}" href="Profile.html">Profile</a>
+                        </li>
+                    </ul>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/logout}" onclick="Signout()" style="cursor: default;">
+                        <i class="glyphicon glyphicon-remove-sign"></i>
+                        Sign out
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    
+            <!-- Page Content Holder -->
+            <div id="content">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+    
+                        <div class="navbar-header">
+                            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                                <i class="glyphicon glyphicon-align-left"></i>
+                            </button>
+                        </div>
+    
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-right">
+                                <img src="img/TodoLogo.png" style="margin-top: -75px; margin-bottom: -75px;">
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <h2 style="font-family: inherit; line-height: 1.1; color: inherit; font-size: 30px; font-weight: inherit; margin-top: -5px;margin-bottom: 3px;" >Profile</h2>
+                <hr style="background-color: #52c8fa; height: 2px;">
+             
+                <form method="POST" class="register-form" id="register-form">
+                    <div class="form-group" style="width: 500px;">
+                        <label for="name" style="margin-left: 7px;"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                        <input type="text" name="name" id="name" placeholder="First Name"/>
+                    </div>
+                    <div class="form-group" style="width: 500px;">
+                        <label for="name" style="margin-left: 7px;"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                        <input type="text" name="name" id="name" placeholder="Last Name"/>
+                    </div>
+                    <div class="form-group" style="width: 500px;">
+                        <label for="email" style="margin-left: 7px;"><i class="zmdi zmdi-email"></i></label>
+                        <input type="email" name="email" id="email" placeholder="Your Email"/>
+                    </div>
+                    <div class="form-group" style="width: 500px;">
+                        <label for="pass" style="margin-left: 7px;"><i class="zmdi zmdi-lock"></i></label>
+                        <input type="password" name="pass" id="pass" placeholder="New Password"/>
+                    </div>
+                </form>
+                <div style="margin-top: 22px;">
+                    <button class="updateBtn" onclick="updateMessage()">Update</button>
+                </div>  
+            </div>
+
+             <!-- Profile form -->
+                        
+               
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <!-- Bootstrap Js CDN -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
+     
+
+     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"> </script>
+     <script>
+      //SweatAlert
+      function updateMessage() {
+        swal("Good job!", "Your profile updated succesfully!", "success");
+       }  
+    
+    </script>
+
+    <style>
+      .updateBtn {
+        background-color: #52c8fa;
+        color: white;
+        border: none;
+        padding: 15px 39px;
+        margin-top: 25px;
+        cursor: pointer;
+        font-family: '/fonts/poppins';
+        box-sizing: border-box;
+        width: auto;
+        font: 400 13.3333px Arial;
+        border-radius: 5px;
+        box-shadow: 3px 5px #888888;
+      }
+
+      .updateBtn:hover{
+          color: white;
+          background-color: #138dff;
+      }
+    </style>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"> </script>
+    <script>
+    function Signout() {
+        swal("Are you sure you want to sign out?", {
+         buttons: ["No", "Yes"],
+
+    });
+    }
+    </script>
+</body>
+
+
+    

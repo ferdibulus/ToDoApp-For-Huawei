@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.tymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>To-Do List-Homepage</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/fonts/material-icon/css/material-design-iconic-font.min.css}">
+   
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/styleHomepage.css}">
+    <link rel="stylesheet" th:href="@{css/todo.css}">
+        <!--Icon-->
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/img/TodoIcon.png}">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar Holder -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>To-Do App</h3>
+                <strong><i><img src="img/TodoLogo.ico" 
+                style=" background-color: white; height: 72px;
+                    width: 93px;
+                    margin-left: -20px;
+                    background-color: white;
+                    border-radius: 25px;"></i></strong>
+                <hr style="background-color:white; height: 2px;">
+            </div>
+
+            <ul class="list-unstyled components" style="margin-top: -47px; margin-left: 10px;">
+                <li>
+                    <a th:href="@{HomePage}" href="HomePage.html">
+                        <i class="glyphicon glyphicon-home"></i>
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{ToDoList}" href="ToDoList.html">
+                        <i class="glyphicon glyphicon-list-alt"></i>
+                        My To-Do List
+                    </a>
+                    <a  href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="glyphicon glyphicon-wrench"></i>
+                        Settings
+                    </a>
+                    <ul class="collapse list-unstyled " id="pageSubmenu">
+                        <li>
+                            <a th:href="@{Profile}" href="Profile.html">Profile</a>
+                        </li>
+                    </ul>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/logout}" onclick="Signout()" style="cursor: default;">
+                        <i class="glyphicon glyphicon-remove-sign"></i>
+                        Sign out
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content Holder -->
+        <div id="content">
+
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+
+                    <div class="navbar-header">
+                        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                            <i class="glyphicon glyphicon-align-left"></i>
+   						<!-- ADD USER NAME -->
+   					
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <img src="img/TodoLogo.png" style="margin-top: -75px; margin-bottom: -75px;">
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <h2>HomePage</h2>
+            <hr style="background-color: #52c8fa; height: 2px;">
+             <form th:action="@{/HomePage}" method="post" th:object="${list}">
+             <div id="myDIV" class="header">
+                <input type="text" id="myInput" name="listName"   placeholder="List Name" required autofocus="autofocus" />
+                <button  class="addBtn1">Create To Do List </button>             
+              </div>
+              </form>
+              <br>
+                <h4>Lists of My ToDo List</h4>
+                <hr style="background-color: #52c8fa; height: 2px; width: 196px;
+                margin-left: inherit;">
+
+            <table class="table table-striped" style="margin-top: 10px; font-size: 18px;">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Go</th>
+                <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <th scope="row">1</th>
+                <td>sdfsd</td>
+                <td><img src="img/outbond-24px.svg"></td>
+                <td><img src="img/disabled_by_default-24px.svg" onclick="Delete()"></td>
+                </tr>
+            </tbody>
+            </table>
+
+             </div>         
+        </div>
+
+    
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <!-- Bootstrap Js CDN -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+
+
+        function Close() {
+            setTimeout(function(){  }, 3000);
+        }
+
+    </script>
+     <style>
+        .userName {
+            margin-left: 10px;
+            font-family: Arial;
+            font-size: 20px;
+        }
+    </style>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"> </script>
+    <script>
+    function Signout() {
+        swal("Are you sure you want to sign out?", {
+         buttons: ["No", "Yes"],
+
+    });
+    }
+    function Delete() {
+                swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this list of to do list!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                });
+    }
+    </script>
+</body>
+
+
+    
